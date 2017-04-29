@@ -1,18 +1,7 @@
-[SecureContext, Exposed=(Window,Worker)]
-interface ServiceWorker : EventTarget {
-  readonly attribute USVString scriptURL;
-  readonly attribute ServiceWorkerState state;
-  void postMessage(any message, optional sequence<object> transfer = []);
-
-  // event
-  attribute EventHandler onstatechange;
-};
-ServiceWorker implements AbstractWorker;
-
-enum ServiceWorkerState {
-  "installing",
-  "installed",
-  "activating",
-  "activated",
-  "redundant"
-};
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/my-app/sw.js').then(function(reg) {
+    console.log('Yey!', reg);
+  }).catch(function(err) {
+    console.log('Boo!', err);
+  });
+}
