@@ -3,10 +3,12 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('myapp-static-v1').then(function(cache) {
       return cache.addAll([
-        '/',
-        //'/styles/all.css',
-        //'/styles/imgs/bg.png',
-       // '/scripts/all.js'
+        'custom-style.css',
+        'custom-style.css',
+        'custom-style.scss',
+        'favicon.ico',
+        'index.html',
+        'logo-site.png'
       ]);
     })
   )
