@@ -1,7 +1,21 @@
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/my-app/sw.js').then(function(reg) {
-    console.log('Yey!', reg);
-  }).catch(function(err) {
-    console.log('Boo!', err);
-  });
-}
+self.addEventListener('install', function(event) {
+  // pre cache a load of stuff:
+  event.waitUntil(
+    caches.open('myapp-static-v1').then(function(cache) {
+      return cache.addAll([
+        '/',
+        //'/styles/all.css',
+        //'/styles/imgs/bg.png',
+       // '/scripts/all.js'
+      ]);
+    })
+  )
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request).then(function(cachedResponse) {
+      return cachedResponse || fetch(event.request);
+    })
+  );
+});
